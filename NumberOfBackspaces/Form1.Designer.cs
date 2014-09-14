@@ -32,6 +32,9 @@
             this.startBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.resetBtn = new System.Windows.Forms.Button();
+            this.mistakesPerMinuteLbl = new System.Windows.Forms.Label();
+            this.mistakesPerWordLbl = new System.Windows.Forms.Label();
+            this.wordsCountedLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // countLabel
@@ -77,20 +80,50 @@
             this.resetBtn.UseVisualStyleBackColor = true;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
             // 
+            // mistakesPerMinuteLbl
+            // 
+            this.mistakesPerMinuteLbl.AutoSize = true;
+            this.mistakesPerMinuteLbl.Location = new System.Drawing.Point(12, 39);
+            this.mistakesPerMinuteLbl.Name = "mistakesPerMinuteLbl";
+            this.mistakesPerMinuteLbl.Size = new System.Drawing.Size(44, 13);
+            this.mistakesPerMinuteLbl.TabIndex = 4;
+            this.mistakesPerMinuteLbl.Text = "MPM: 0";
+            // 
+            // mistakesPerWordLbl
+            // 
+            this.mistakesPerWordLbl.AutoSize = true;
+            this.mistakesPerWordLbl.Location = new System.Drawing.Point(107, 39);
+            this.mistakesPerWordLbl.Name = "mistakesPerWordLbl";
+            this.mistakesPerWordLbl.Size = new System.Drawing.Size(46, 13);
+            this.mistakesPerWordLbl.TabIndex = 5;
+            this.mistakesPerWordLbl.Text = "MPW: 0";
+            // 
+            // wordsCountedLbl
+            // 
+            this.wordsCountedLbl.AutoSize = true;
+            this.wordsCountedLbl.Location = new System.Drawing.Point(207, 39);
+            this.wordsCountedLbl.Name = "wordsCountedLbl";
+            this.wordsCountedLbl.Size = new System.Drawing.Size(50, 13);
+            this.wordsCountedLbl.TabIndex = 6;
+            this.wordsCountedLbl.Text = "Words: 0";
+            // 
             // form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(394, 33);
+            this.ClientSize = new System.Drawing.Size(394, 61);
+            this.Controls.Add(this.wordsCountedLbl);
+            this.Controls.Add(this.mistakesPerWordLbl);
+            this.Controls.Add(this.mistakesPerMinuteLbl);
             this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.stopBtn);
             this.Controls.Add(this.startBtn);
             this.Controls.Add(this.countLabel);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(410, 72);
-            this.MinimumSize = new System.Drawing.Size(410, 72);
+            this.MaximumSize = new System.Drawing.Size(410, 100);
+            this.MinimumSize = new System.Drawing.Size(410, 100);
             this.Name = "form";
             this.Text = "Count Errors";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -105,6 +138,9 @@
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.Button resetBtn;
+        private System.Windows.Forms.Label mistakesPerMinuteLbl;
+        private System.Windows.Forms.Label mistakesPerWordLbl;
+        private System.Windows.Forms.Label wordsCountedLbl;
     }
 }
 

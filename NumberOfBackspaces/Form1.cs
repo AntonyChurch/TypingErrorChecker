@@ -18,13 +18,29 @@ namespace NumberOfBackspaces
         private LowLevelKeyboardProc _proc;
         private IntPtr _hookID = IntPtr.Zero;
         private bool counting = false;
-        private int count = 0;
+        private int errorCount = 0;
+        private int wordsTyped = 0;
+        private double errorsPerWord = 0;
+        private double errorsPerMinute = 0;
+        private Stopwatch loggedTime = new Stopwatch();
+        private Timer updateTitleTimer = new Timer();
 
         public form()
         {
             InitializeComponent();
 
             _proc = HookCallback;
+            updateTitleTimer.Interval = 1000;
+            updateTitleTimer.Tick += updateTitleTimer_Tick;
+            updateTitleTimer.Start();
+        }
+
+        void updateTitleTimer_Tick(object sender, EventArgs e)
+        {
+            if (counting)
+            {
+                this.Text = "Count Errors for: " + (int)(loggedTime.ElapsedMilliseconds / 1000) + " seconds";
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,22 +50,26 @@ namespace NumberOfBackspaces
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            loggedTime.Start();
             startBtn.Enabled = false;
             stopBtn.Enabled = true;
             counting = true;
-            this.Text = "Count Errors (counting)";
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
         {
+            loggedTime.Stop();
             stopBtn.Enabled = false;
             startBtn.Enabled = true;
             counting = false;
+            this.Text = "Count Errors";
         }
 
         private void resetBtn_Click(object sender, EventArgs e)
         {
-            count = 0;
+            errorCount = 0;
+            wordsTyped = 0;
+
             countLabel.Text = "Count: 0";
         }
 
@@ -77,10 +97,22 @@ namespace NumberOfBackspaces
                 {
                     if (counting)
                     {
-                        ++count;
-                        countLabel.Text = "Count: " + count;
+                        ++errorCount;                        
+                        errorsPerWord = wordsTyped / errorCount;
+                        errorsPerMinute = (loggedTime.ElapsedMilliseconds / 1000 / 60) / errorCount;
+                        countLabel.Text = "Count: " + errorCount;
+                        mistakesPerMinuteLbl.Text = "MPM: " + errorsPerMinute.ToString("0.00");
+                        mistakesPerWordLbl.Text = "MPW: " + errorsPerWord.ToString("0.00");
                     }
-                }                
+                }
+                else if ((Keys)vkCode == Keys.Space)
+                {
+                    if (counting)
+                    {
+                        ++wordsTyped;
+                        wordsCountedLbl.Text = "Words: " + wordsTyped;
+                    }
+                }
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
